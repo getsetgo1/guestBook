@@ -1,17 +1,7 @@
 <script>
   import { initializeApp } from "firebase/app";
   import { getDatabase, ref, child, get, set, push } from "firebase/database";
-  import {
-    Table,
-    TableBody,
-    TableBodyCell,
-    TableBodyRow,
-    TableHead,
-    TableHeadCell,
-    Checkbox,
-    TableSearch,
-  } from "flowbite-svelte";
-
+  import { Modal, Button } from "flowbite-svelte";
   // 파이어베이스 접근권한 필요요소
   const firebaseConfig = {
     apiKey: "AIzaSyCQLaKjFWCt67i-1gZ0XkhzR6UBRE0diMA",
@@ -23,6 +13,7 @@
     messagingSenderId: "876239622279",
     appId: "1:876239622279:web:01f16832de6b22e99fa822",
   };
+  let defaultModal = false;
 
   // 파이어베이스 실행 함수
   initializeApp(firebaseConfig);
@@ -725,31 +716,62 @@
 
   const click = () => data.map((item) => addUser(item.이름, item.소속));
   let filterValue = -1;
+  let img = "";
 </script>
 
 <!-- <button on:click={click}>추가</button> -->
-<button on:click={() => (filterValue = -1)}>모두</button>
-<button on:click={() => (filterValue = 1)}>참석</button>
-<button on:click={() => (filterValue = 0)}>불참석</button>
-<Table>
-  <TableHead>
-    <TableHeadCell>Name</TableHeadCell>
-    <TableHeadCell>Team</TableHeadCell>
-    <TableHeadCell>Attend</TableHeadCell>
-    <TableHeadCell>Autograph</TableHeadCell>
-  </TableHead>
-  <!-- <TableBody class="divide-y"> -->
-  <TableBody>
-    {#each Object.entries(items)
-      .map(([_, value]) => value)
-      .filter( (value) => (filterValue === -1 ? true : value.attend == filterValue) )
-      .sort( (a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0) ) as value}
-      <tr>
-        <td>{value.name}</td>
-        <td>{value.team}</td>
-        <td>{value.attend ? "참석" : " "}</td>
-        <td>{value.img_src}</td>
-      </tr>
-    {/each}
-  </TableBody>
-</Table>
+<header class="z-fixed header-fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-light bg-body shadow-lg">
+    <button on:click={() => (filterValue = -1)}>모두</button>
+    <button on:click={() => (filterValue = 1)}>참석</button>
+    <button on:click={() => (filterValue = 0)}>불참석</button>
+  </nav>
+</header>
+<div class="container py-9 py-lg-11">
+  <div class="row justify-content-center">
+    <div class="col-12">
+      <div class="d-flex mb-4 align-items-center">
+        <h6 class="mb-0 me-3">참가자 명단</h6>
+        <div class="pt-1 border-bottom flex-grow-1" />
+      </div>
+
+      <table class="table mb-9 table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" class="col col-sm-3 col-xs-3 col-3">이름</th>
+            <th scope="col" class="col col-sm-3 col-xs-3 col-3">소속</th>
+            <th scope="col" class="col col-sm-3 col-xs-3 col-3">참석여부</th>
+          </tr>
+        </thead>
+        <tbody>
+          {#each Object.entries(items)
+            .map(([_, value]) => value)
+            .filter( (value) => (filterValue === -1 ? true : value.attend == filterValue) )
+            .sort( (a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0) ) as value}
+            <tr>
+              <td>{value.name}</td>
+              <td>{value.team}</td>
+              <td>
+                {#if value.attend}
+                  <Button
+                  class="btn btn-success"
+                    on:click={() => {
+                      defaultModal = true;
+                      img = value.img_src;
+                    }}>싸인</Button
+                  >
+                {/if}
+              </td>
+            </tr>
+          {/each}
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+<Modal title="Terms of Service" bind:open={defaultModal} autoclose>
+  <img src={img}/>
+  <svelte:fragment slot="footer">
+    <Button on:click={() => defaultModal=false} class="btn btn-success">close</Button>
+  </svelte:fragment>
+</Modal>
