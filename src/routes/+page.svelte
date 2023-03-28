@@ -724,9 +724,13 @@
   }
 
   const click = () => data.map((item) => addUser(item.이름, item.소속));
+  let filterValue = -1;
 </script>
 
 <!-- <button on:click={click}>추가</button> -->
+<button on:click={() => (filterValue = -1)}>모두</button>
+<button on:click={() => (filterValue = 1)}>참석</button>
+<button on:click={() => (filterValue = 0)}>불참석</button>
 <Table>
   <TableHead>
     <TableHeadCell>Name</TableHeadCell>
@@ -736,11 +740,14 @@
   </TableHead>
   <!-- <TableBody class="divide-y"> -->
   <TableBody>
-    {#each Object.entries(items) as [key, value]}
+    {#each Object.entries(items)
+      .map(([_, value]) => value)
+      .filter( (value) => (filterValue === -1 ? true : value.attend == filterValue) )
+      .sort( (a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0) ) as value}
       <tr>
         <td>{value.name}</td>
         <td>{value.team}</td>
-        <td>{value.attend}</td>
+        <td>{value.attend ? "참석" : " "}</td>
         <td>{value.img_src}</td>
       </tr>
     {/each}
