@@ -717,14 +717,19 @@
   const click = () => data.map((item) => addUser(item.이름, item.소속));
   let filterValue = -1;
   let img = "";
+  let sign_name = "";
 </script>
 
 <!-- <button on:click={click}>추가</button> -->
 <header class="z-fixed header-fixed-top">
   <nav class="navbar navbar-expand-lg navbar-light bg-body shadow-lg">
-    <button on:click={() => (filterValue = -1)}>모두</button>
-    <button on:click={() => (filterValue = 1)}>참석</button>
-    <button on:click={() => (filterValue = 0)}>불참석</button>
+    <div class="container">
+      <div class="position-relative">
+        <button class="mx-2" on:click={() => (filterValue = -1)}>모두</button>
+        <button class="mx-2" on:click={() => (filterValue = 1)}>참석</button>
+        <button class="mx-2" on:click={() => (filterValue = 0)}>불참석</button>
+      </div>
+    </div>
   </nav>
 </header>
 <div class="container py-9 py-lg-11">
@@ -754,10 +759,11 @@
               <td>
                 {#if value.attend}
                   <Button
-                  class="btn btn-success"
+                    class="btn btn-success"
                     on:click={() => {
                       defaultModal = true;
                       img = value.img_src;
+                      sign_name = value.name;
                     }}>싸인</Button
                   >
                 {/if}
@@ -769,9 +775,11 @@
     </div>
   </div>
 </div>
-<Modal title="Terms of Service" bind:open={defaultModal} autoclose>
-  <img src={img}/>
+<Modal title={`${sign_name}님의 싸인`} bind:open={defaultModal} autoclose>
+  <img src={img} />
   <svelte:fragment slot="footer">
-    <Button on:click={() => defaultModal=false} class="btn btn-success">close</Button>
+    <Button on:click={() => (defaultModal = false)} class="btn btn-success"
+      >close</Button
+    >
   </svelte:fragment>
 </Modal>
