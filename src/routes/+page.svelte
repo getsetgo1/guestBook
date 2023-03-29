@@ -767,9 +767,9 @@
             <tr>
               <td class="px-2 text-[15px] font-bold" >{value.name}</td>
               <td class="px-2 text-[14px] align-middle">{value.team}</td>
-              <td class="px-2">
+              <td class="px-2 text-center">
                 {#if value.attend}
-                  <Button size="sm"
+                  <Button size="xs"
                     class="btn btn-success"
                     on:click={() => {
                       defaultModal = true;
