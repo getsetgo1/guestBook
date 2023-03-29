@@ -796,7 +796,7 @@
 <Modal title={`${sign_name}님의 싸인`} bind:open={defaultModal} autoclose>
   <img
     src={`https://firebasestorage.googleapis.com/v0/b/signature-514.appspot.com/o/signatures%2F${img}.png?alt=media&token=5abf4577-0ca3-47ac-bf7d-f1d523e7046d`}
-  />
+  alt="signature" />
   <svelte:fragment slot="footer">
     <Button on:click={() => (defaultModal = false)} class="btn btn-success"
       >close</Button
