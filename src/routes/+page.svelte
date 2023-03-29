@@ -718,6 +718,17 @@
   let filterValue = -1;
   let img = "";
   let sign_name = "";
+  let clickedName
+
+  $: {
+    if(filterValue === -1){
+      clickedName = '모두'
+    }else if(filterValue === 1){
+      clickedName = '참석'
+    }if(filterValue === 0){
+      clickedName = '불참석'
+    }
+  }
 </script>
 
 <!-- <button on:click={click}>추가</button> -->
@@ -725,40 +736,41 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-body shadow-lg">
     <div class="container">
       <div class="position-relative">
-        <button class="mx-2" on:click={() => (filterValue = -1)}>모두</button>
-        <button class="mx-2" on:click={() => (filterValue = 1)}>참석</button>
-        <button class="mx-2" on:click={() => (filterValue = 0)}>불참석</button>
+        <button class="mx-2 bg-green-200 px-4 py-2 rounded-lg font-KotraBold" on:click={() => (filterValue = -1)}>모두</button>
+        <button class="mx-2 bg-blue-300 px-4 py-2 rounded-lg font-KotraBold" on:click={() => (filterValue = 1)}>참석</button>
+        <button class="mx-2 bg-red-300 px-4 py-2 rounded-lg font-KotraBold" on:click={() => (filterValue = 0)}>불참석</button>
       </div>
     </div>
   </nav>
 </header>
-<div class="container py-9 py-lg-11">
+<div class="px-2 pt-9 pb-4">
   <div class="row justify-content-center">
     <div class="col-12">
       <div class="d-flex mb-4 align-items-center">
-        <h6 class="mb-0 me-3">참가자 명단</h6>
-        <div class="pt-1 border-bottom flex-grow-1" />
+        <h6 class="mb-0 font-TmoneyRoundWind">참가자 명단 ({clickedName})</h6>
+        &nbsp
+        <div class="border-bottom flex-grow-1" />
       </div>
 
       <table class="table mb-9 table-bordered">
         <thead>
-          <tr>
-            <th scope="col" class="col col-sm-3 col-xs-3 col-3">이름</th>
-            <th scope="col" class="col col-sm-3 col-xs-3 col-3">소속</th>
-            <th scope="col" class="col col-sm-3 col-xs-3 col-3">참석여부</th>
+          <tr class="text-center">
+            <th scope="col" class="col col-2">이름</th>
+            <th scope="col" class="col col-6">소속</th>
+            <th scope="col" class="col col-3">참석여부</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody class="text-left">
           {#each Object.entries(items)
             .map(([_, value]) => value)
             .filter( (value) => (filterValue === -1 ? true : value.attend == filterValue) )
             .sort( (a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0) ) as value}
             <tr>
-              <td>{value.name}</td>
-              <td>{value.team}</td>
-              <td>
+              <td class="px-2 text-[15px] font-bold" >{value.name}</td>
+              <td class="px-2 text-[14px] align-middle">{value.team}</td>
+              <td class="px-2">
                 {#if value.attend}
-                  <Button
+                  <Button size="sm"
                     class="btn btn-success"
                     on:click={() => {
                       defaultModal = true;
@@ -776,7 +788,7 @@
   </div>
 </div>
 <Modal title={`${sign_name}님의 싸인`} bind:open={defaultModal} autoclose>
-  <img src={img} />
+  <img src={img} alt="signature" />
   <svelte:fragment slot="footer">
     <Button on:click={() => (defaultModal = false)} class="btn btn-success"
       >close</Button

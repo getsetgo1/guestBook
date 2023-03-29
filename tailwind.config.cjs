@@ -7,6 +7,11 @@ module.exports = {
 
   theme: {
     extend: {},
+    fontFamily: {
+      NanumGothic: ["NanumGothic"],
+      KotraBold: ["KOTRA_BOLD-Bold"],
+      TmoneyRoundWind : ['TmoneyRoundWindExtraBold'],
+    },
   },
 
   plugins: [require("flowbite/plugin")],
