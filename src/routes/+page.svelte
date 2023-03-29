@@ -735,16 +735,9 @@
   <nav class="navbar navbar-expand-lg navbar-light bg-body shadow-lg">
     <div class="container">
       <div class="position-relative">
-<<<<<<< HEAD
         <button class="mx-2 bg-green-200 px-4 py-2 rounded-lg font-KotraBold" on:click={() => (filterValue = -1)}>모두</button>
         <button class="mx-2 bg-blue-300 px-4 py-2 rounded-lg font-KotraBold" on:click={() => (filterValue = 1)}>참석</button>
         <button class="mx-2 bg-red-300 px-4 py-2 rounded-lg font-KotraBold" on:click={() => (filterValue = 0)}>불참석</button>
-=======
-        <!-- <button on:click={click}>추가</button> -->
-        <button class="mx-2" on:click={() => (filterValue = -1)}>모두</button>
-        <button class="mx-2" on:click={() => (filterValue = 1)}>참석</button>
-        <button class="mx-2" on:click={() => (filterValue = 0)}>불참석</button>
->>>>>>> 4cc839afca9e7c859da9fe33205fe9c9660fdb9a
       </div>
     </div>
   </nav>
