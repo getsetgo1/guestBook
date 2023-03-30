@@ -34,8 +34,91 @@
       console.error(error);
     });
 
-  // 임시 데이터
+  // 방명록 데이터
   const data = [
+    //히포 직원 데이터
+    {
+      이름: "김우진",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "남기현",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "박민수",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "송영석",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "손하민",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "이준희",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "유주헌",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "이용호",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "이준구",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "정하림",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "이태화",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "한윤희",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "신대호",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "박우진",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "이동규",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "김남균",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "권민지",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "이슬기",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "안보미",
+      소속: "히포티앤씨",
+    },
+    {
+      이름: "임현아",
+      소속: "히포티앤씨",
+    },
+
+    //실제 데이터
     {
       이름: "손애숙",
       소속: "",
@@ -718,28 +801,40 @@
   let filterValue = -1;
   let img = "";
   let sign_name = "";
-  let clickedName
+  let clickedName;
 
   $: {
-    if(filterValue === -1){
-      clickedName = '모두'
-    }else if(filterValue === 1){
-      clickedName = '참석'
-    }if(filterValue === 0){
-      clickedName = '불참석'
+    if (filterValue === -1) {
+      clickedName = "모두";
+    } else if (filterValue === 1) {
+      clickedName = "참석";
+    }
+    if (filterValue === 0) {
+      clickedName = "불참석";
     }
   }
 
-  $: console.log(img)
+  $: console.log(img);
 </script>
 
 <header class="z-fixed header-fixed-top">
   <nav class="navbar navbar-expand-lg navbar-light bg-body shadow-lg">
     <div class="container">
       <div class="position-relative">
-        <button class="mx-2 bg-green-200 px-4 py-2 rounded-lg font-KotraBold" on:click={() => (filterValue = -1)}>모두</button>
-        <button class="mx-2 bg-blue-300 px-4 py-2 rounded-lg font-KotraBold" on:click={() => (filterValue = 1)}>참석</button>
-        <button class="mx-2 bg-red-300 px-4 py-2 rounded-lg font-KotraBold" on:click={() => (filterValue = 0)}>불참석</button>
+        <button
+          class="mx-2 bg-green-200 px-4 py-2 rounded-lg font-KotraBold"
+          on:click={() => (filterValue = -1)}>모두</button
+        >
+        <button
+          class="mx-2 bg-blue-300 px-4 py-2 rounded-lg font-KotraBold"
+          on:click={() => (filterValue = 1)}>참석</button
+        >
+        <button
+          class="mx-2 bg-red-300 px-4 py-2 rounded-lg font-KotraBold"
+          on:click={() => (filterValue = 0)}>불참석</button
+        >
+        <!-- 테스트용 DB 추가 함수
+        <button on:click={click}>추가</button> -->
       </div>
     </div>
   </nav>
@@ -767,7 +862,7 @@
             .filter( (value) => (filterValue === -1 ? true : value.attend == filterValue) )
             .sort( (a, b) => (a.name < b.name ? -1 : a.name > b.name ? 1 : 0) ) as value}
             <tr>
-              <td class="px-2 text-[15px] font-bold" >{value.name}</td>
+              <td class="px-2 text-[15px] font-bold">{value.name}</td>
               <td class="px-2 text-[14px] align-middle">{value.team}</td>
               <td class="px-2 text-center">
                 {#if value.attend && value.img_src}
@@ -789,13 +884,17 @@
   </div>
 </div>
 
+<Modal
+  title={`${sign_name}님의 싸인`}
+  bind:open={defaultModal}
+  autoclose
+  class="w-[368px] h-[461px]"
+>
+  <img
+    src={`https://firebasestorage.googleapis.com/v0/b/signature-514.appspot.com/o/signatures%2F${img}.png?alt=media&token=5abf4577-0ca3-47ac-bf7d-f1d523e7046d`}
+    alt="signature"
+  />
 
-<Modal title={`${sign_name}님의 싸인`} bind:open={defaultModal} autoclose class="w-[368px] h-[461px]">
-  {#if img}
-    <img
-      src={`https://firebasestorage.googleapis.com/v0/b/signature-514.appspot.com/o/signatures%2F${img}.png?alt=media&token=5abf4577-0ca3-47ac-bf7d-f1d523e7046d`}
-    alt="signature" />
-  {/if}
   <svelte:fragment slot="footer">
     <Button on:click={() => (defaultModal = false)} class="btn btn-success"
       >close</Button
