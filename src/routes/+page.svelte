@@ -770,7 +770,7 @@
               <td class="px-2 text-[15px] font-bold" >{value.name}</td>
               <td class="px-2 text-[14px] align-middle">{value.team}</td>
               <td class="px-2 text-center">
-                {#if value.attend}
+                {#if value.attend && value.img_src}
                   <Button size="xs"
                     class="btn btn-success"
                     on:click={() => {
@@ -791,10 +791,11 @@
 
 
 <Modal title={`${sign_name}님의 싸인`} bind:open={defaultModal} autoclose class="w-[368px] h-[461px]">
+  {#if img}
     <img
       src={`https://firebasestorage.googleapis.com/v0/b/signature-514.appspot.com/o/signatures%2F${img}.png?alt=media&token=5abf4577-0ca3-47ac-bf7d-f1d523e7046d`}
     alt="signature" />
-  
+  {/if}
   <svelte:fragment slot="footer">
     <Button on:click={() => (defaultModal = false)} class="btn btn-success"
       >close</Button
