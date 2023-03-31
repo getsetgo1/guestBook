@@ -1135,10 +1135,10 @@
       <table class="table mb-9 table-bordered">
         <thead>
           <tr class="text-center">
-            <th scope="col" class="col col-2">이름</th>
-            <th scope="col" class="col col-6">소속</th>
-            <th scope="col" class="col col-3">참석여부</th>
-            <th scope="col" class="col col-3">테이블번호</th>
+            <th scope="col" class="col col-3">이름</th>
+            <th scope="col" class="col col-5">소속</th>
+            <th scope="col" class="col col-4">참석여부</th>
+            <th scope="col" class="col col-1">No</th>
           </tr>
         </thead>
         <tbody class="text-left">
@@ -1163,11 +1163,7 @@
                   {/if}
                 </td>
                 <td class="px-2 text-[14px] text-center font-bold align-middle">
-                  {#if value.tableNum}
                   {value.tableNum}
-                  {:else}
-                  히포티앤씨 직원
-                  {/if}
                 </td>             
             </tr>
           {/each}
